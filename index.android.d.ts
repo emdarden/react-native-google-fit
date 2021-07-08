@@ -55,7 +55,7 @@ declare module 'react-native-google-fit' {
       * @param {Object} options getUserInputSteps accepts an options object containing optional startDate: ISO8601Timestamp and endDate: ISO8601Timestamp.
       * @param {Function} callback The function will be called with an array of elements.
       */
-    getUserInputSteps: (options: Partial<StartAndEndDate>, callback: (isError?: boolean, result?: number)=> void ) => void;
+    getUserInputSteps: (options: Partial<StartAndEndDate>, callback: (isError?: boolean, result?: number) => void) => void;
 
     /**
      * Get the total distance per day over a specified date range.
@@ -110,6 +110,11 @@ declare module 'react-native-google-fit' {
     getHeartRateSamples: (
       options: StartAndEndDate & Partial<BucketOptions>
     ) => Promise<HeartRateResponse[]>;
+
+    saveHeartRateSample: (
+      heartrateMap: HeartRate,
+      callback: (isError: boolean, result: true) => void
+    ) => void
 
     getBloodPressureSamples: (
       options: StartAndEndDate & Partial<BucketOptions>
@@ -217,6 +222,11 @@ declare module 'react-native-google-fit' {
     waterConsumed: number
   };
 
+  export type HeartRate = {
+    value: number
+    date: number
+  }
+
   export type DeleteOptions = {
     startDate: string | number
     endDate: string | number
@@ -238,11 +248,11 @@ declare module 'react-native-google-fit' {
     bucketUnit: BucketUnit
   };
 
-  type rawSteps = Array<{startDate: string, endDate: string, steps: number}>;
+  type rawSteps = Array<{ startDate: string, endDate: string, steps: number }>;
 
   export type StepsResponse = {
     source: string,
-    steps: Array<{date: string, value: number }>,
+    steps: Array<{ date: string, value: number }>,
     rawSteps: rawSteps
   };
 
@@ -277,12 +287,12 @@ declare module 'react-native-google-fit' {
 
   export type WeightData = { date: string } & ({ unit: 'pound', value: number } | {});
 
-  export type AuthorizeResponse = { success: true} | {success: false, message: string };
+  export type AuthorizeResponse = { success: true } | { success: false, message: string };
 
   export type DateValueResponse = {
     value: number,
-    endDate:string,
-    startDate:string,
+    endDate: string,
+    startDate: string,
     day: Day
   }
 
@@ -344,7 +354,7 @@ declare module 'react-native-google-fit' {
   }
 
   export type Nutrients = {
-    [ key in Nutrient ]?: number
+    [key in Nutrient]?: number
   }
 
   export enum Nutrient {
@@ -459,10 +469,10 @@ declare module 'react-native-google-fit' {
     FITNESS_BODY_TEMPERATURE_WRITE = 'https://www.googleapis.com/auth/fitness.body_temperature.write',
     FITNESS_REPRODUCTIVE_HEALTH_READ = 'https://www.googleapis.com/auth/fitness.reproductive_health.read',
     FITNESS_REPRODUCTIVE_HEALTH_WRITE = 'https://www.googleapis.com/auth/fitness.reproductive_health.write',
-    FITNESS_SLEEP_READ =  'https://www.googleapis.com/auth/fitness.sleep.read',
+    FITNESS_SLEEP_READ = 'https://www.googleapis.com/auth/fitness.sleep.read',
     FITNESS_SLEEP_WRITE = 'https://www.googleapis.com/auth/fitness.sleep.write',
     FITNESS_HEART_RATE_READ = 'https://www.googleapis.com/auth/fitness.heart_rate.read',
-    FITNESS_HEART_RATE_WRITE= 'https://www.googleapis.com/auth/fitness.heart_rate.write'
+    FITNESS_HEART_RATE_WRITE = 'https://www.googleapis.com/auth/fitness.heart_rate.write'
   }
 
   const googleFit: GoogleFit;

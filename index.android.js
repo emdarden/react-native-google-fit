@@ -98,7 +98,7 @@ class RNGoogleFit {
         );
 
         // this need to be changed in the future if we want to use RecordingAPI for more sensitive permissions
-        if( granted === PermissionsAndroid.RESULTS.GRANTED ) {
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           // we don't do anything here since the permissons are granted
         } else {
           // remove distance from array to avoid crash,
@@ -155,7 +155,7 @@ class RNGoogleFit {
    * @param {Date} date optional param, new Date() will be used if date is not provided
    * @param {number} adjustment, use to adjust the default start day of week, 0 = Sunday, 1 = Monday, etc.
    */
-  getWeeklySteps(date=new Date(), adjustment=0) {
+  getWeeklySteps(date = new Date(), adjustment = 0) {
     const [startDate, endDate] = getWeekBoundary(date, adjustment);
     const options = {
       startDate: startDate,
@@ -180,8 +180,8 @@ class RNGoogleFit {
     );
 
     var result;
-    if(data.length > 0) {
-      result = data.map(function(dev) {
+    if (data.length > 0) {
+      result = data.map(function (dev) {
         const obj = {}
         obj.source =
           dev.source.appPackage +
@@ -190,7 +190,7 @@ class RNGoogleFit {
         obj.rawSteps = dev.steps
         return obj
       }, this);
-    }else{
+    } else {
       //simply return raw result for better debugging;
       return data;
     }
@@ -509,6 +509,17 @@ class RNGoogleFit {
       return prepareResponse(result, 'value');
     }
     return result;
+  }
+
+  saveHeartRateSample(heartrateMap, callback) {
+    googleFit.saveHeartRateSample(
+      heartrateMap,
+      msg => {
+        callback(true, msg)
+      },
+      res => {
+        callback(false, res)
+      })
   }
 
   getBloodPressureSamples = async (options, callback) => {
