@@ -61,6 +61,7 @@ public class GoogleFitManager implements
     private ActivityHistory activityHistory;
     private HydrationHistory hydrationHistory;
     private SleepHistory sleepHistory;
+    private OxygenHistory oxygenHistory;
 
     private static final String TAG = "RNGoogleFit";
 
@@ -83,6 +84,7 @@ public class GoogleFitManager implements
         this.activityHistory = new ActivityHistory(mReactContext, this);
         this.hydrationHistory = new HydrationHistory(mReactContext, this);
         this.sleepHistory = new SleepHistory(mReactContext, this);
+        this.oxygenHistory = new OxygenHistory(mReactContext, this);
         //        this.stepSensor = new StepSensor(mReactContext, activity);
     }
 
@@ -108,6 +110,10 @@ public class GoogleFitManager implements
 
     public HeartrateHistory getHeartrateHistory() {
         return heartrateHistory;
+    }
+
+    public OxygenHistory getOxygenHistory() {
+        return oxygenHistory;
     }
 
     public DistanceHistory getDistanceHistory() {
