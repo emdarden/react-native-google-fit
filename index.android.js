@@ -522,6 +522,31 @@ class RNGoogleFit {
       })
   }
 
+  getOxygenSaturationSamples = async (options) => {
+    const { startDate, endDate, bucketInterval, bucketUnit } = prepareInput(options);
+    const result = await googleFit.getOxygenSaturationSamples(
+      startDate,
+      endDate,
+      bucketInterval,
+      bucketUnit
+    );
+    if (result.length > 0) {
+      return prepareResponse(result, 'value');
+    }
+    return result;
+  }
+
+  saveOxygenSaturationSample(oxygenSaturationMap, callback) {
+    googleFit.saveOxygenSaturationSample(
+      oxygenSaturationMap,
+      msg => {
+        callback(true, msg)
+      },
+      res => {
+        callback(false, res)
+      })
+  }
+
   getBloodPressureSamples = async (options, callback) => {
     const { startDate, endDate, bucketInterval, bucketUnit } = prepareInput(options);
     const result = await googleFit.getBloodPressureSamples(

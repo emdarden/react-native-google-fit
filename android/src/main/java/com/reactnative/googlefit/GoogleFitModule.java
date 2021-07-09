@@ -356,11 +356,37 @@ public class GoogleFitModule extends ReactContextBaseJavaModule implements Lifec
     }
 
     @ReactMethod
+    public void getOxygenSaturationSamples(double startDate, double endDate, int bucketInterval, String bucketUnit,
+            Promise promise) {
+
+        try {
+            HeartrateHistory heartrateHistory = mGoogleFitManager.getHeartrateHistory();
+            heartrateHistory.setDataType(HealthDataTypes.TYPE_OXYGEN_SATURATION);
+            promise.resolve(heartrateHistory.getHistory((long) startDate, (long) endDate, bucketInterval, bucketUnit));
+        } catch (IllegalViewOperationException e) {
+            promise.reject(e);
+        }
+    }
+
+    @ReactMethod
     public void saveHeartRateSample(ReadableMap heartrateMap, Callback errorCallback, Callback successCallback) {
 
         try {
             HeartrateHistory heartrateHistory = mGoogleFitManager.getHeartrateHistory();
             successCallback.invoke(heartrateHistory.save(heartrateMap));
+        } catch (IllegalViewOperationException e) {
+            errorCallback.invoke(e.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void saveOxygenSaturationSample(ReadableMap oxygenSaturationMap, Callback errorCallback,
+            Callback successCallback) {
+
+        try {
+            HeartrateHistory heartrateHistory = mGoogleFitManager.getHeartrateHistory();
+            heartrateHistory.setDataType(HealthDataTypes.TYPE_OXYGEN_SATURATION);
+            successCallback.invoke(heartrateHistory.save(oxygenSaturationMap));
         } catch (IllegalViewOperationException e) {
             errorCallback.invoke(e.getMessage());
         }

@@ -116,6 +116,15 @@ declare module 'react-native-google-fit' {
       callback: (isError: boolean, result: true) => void
     ) => void
 
+    getOxygenSaturationSamples: (
+      options: StartAndEndDate & Partial<BucketOptions>
+    ) => Promise<OxygenSaturationResponse[]>;
+
+    saveOxygenSaturationSample: (
+      oxygenSaturationMap: OxygenSaturation,
+      callback: (isError: boolean, result: true) => void
+    ) => void
+
     getBloodPressureSamples: (
       options: StartAndEndDate & Partial<BucketOptions>
     ) => Promise<BloodPressureResponse[]>;
@@ -227,6 +236,11 @@ declare module 'react-native-google-fit' {
     date: number
   }
 
+  export type OxygenSaturation = {
+    value: number
+    date: number
+  }
+
   export type DeleteOptions = {
     startDate: string | number
     endDate: string | number
@@ -271,6 +285,13 @@ declare module 'react-native-google-fit' {
   };
 
   export type HeartRateResponse = {
+    startDate: string,
+    endDate: string,
+    value: number,
+    day: Day
+  };
+
+  export type OxygenSaturationResponse = {
     startDate: string,
     endDate: string,
     value: number,
